@@ -224,8 +224,12 @@ ${(a_o_test__failed.length > 0) ? f_s_ansi_clrd('FAILED', o.n_color_red, o.n_fon
 let f_deno_test_all_and_print_summary = async function(
     a_o_promise
 ){
-    let a_o_test = await Promise.all(a_o_promise)
-    f_deno_test_summary(a_o_test)
+    return new Promise(async (f_res, f_rej)=>{
+        let a_o_test = await Promise.all(a_o_promise)
+        f_deno_test_summary(a_o_test)
+        f_res();
+    })
+
 }
 export {
     f_assert_equals, 
