@@ -1,5 +1,20 @@
-import {assertEquals} from "https://deno.land/std@0.190.0/testing/asserts.ts"
-assertEquals(1,2)
+import { assertEquals } from "https://deno.land/std@0.191.0/testing/asserts.ts";
+
+// let a_o = await Promise.all(
+//     [
+//         Deno.test("url test", () => {
+//             const url = new URL("./foo.js", "https://deno.land/");
+//             assertEquals(url.href, "https://deno.land/foo.js");
+//           }), 
+//           Deno.test("url test", () => {
+//             const url = new URL("./foo.js", "https://deno.land/");
+//             assertEquals(url.href, "https://deno.land/foo.js");
+//           }), 
+//     ]
+// )
+// console.log(a_o)
+// import {assertEquals} from "https://deno.land/std@0.190.0/testing/asserts.ts"
+// assertEquals(1,2)
 // Deno.test('no_promise_return', async function(){
 //     new Promise((f_res)=>{
 //         window.setTimeout(function(){
