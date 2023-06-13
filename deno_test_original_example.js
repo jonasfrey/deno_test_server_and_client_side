@@ -1,0 +1,41 @@
+import {assertEquals} from "https://deno.land/std@0.190.0/testing/asserts.ts"
+assertEquals(1,2)
+// Deno.test('no_promise_return', async function(){
+//     new Promise((f_res)=>{
+//         window.setTimeout(function(){
+//             console.log("done")
+//         },2000)
+//     })
+// })
+// Deno.test('promise_return', async function(){
+//     return new Promise((f_res)=>{
+//         window.setTimeout(function(){
+//             console.log("done")
+//         },2000)
+//     })
+// })
+// let f = async function(){
+//     return fetch("http://google.com")//"nonexistingdomain")
+// }
+
+// let f2 = async function(){
+//     fetch("http://google.com")//"nonexistingdomain")
+
+// }
+// let p1 = f().catch(()=>{}).then(rf=>{console.log(typeof rf)})//.finally((rf1)=>{console.log(p1, rf1)});
+// let p2 = f2().catch(()=>{}).then(rf=>{console.log(typeof rf)})//.finally((rf2)=>{console.log(p2, rf2)});
+// console.log(rf1)
+// console.log(rf2)
+
+// try {
+//     await f()
+// } catch (error) {
+//     console.log("error happened")
+//     console.log(error)
+// }
+// try {
+//     await f2()
+// } catch (error) {
+//     console.log("error happened")
+//     console.log(error)
+// }
