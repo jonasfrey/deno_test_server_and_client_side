@@ -85,4 +85,39 @@ await f_deno_test_all_and_print_summary(
         }),
     ]
 )
+//md: # running tests in parallel
+console.log("# running tests in parallel")
+let t1 = undefined
+let t2 = undefined
+let t3 = undefined
+let a_o_test = [];
+a_o_test.push(f_deno_test("t1", async () => {
+    return new Promise((f_res)=>{
+        window.setTimeout(function(){
+            t1 = 1
+            console.log(`t1:${t1}`)
+            f_res(t1)
+        }, 1000)
+    })
+}))
+a_o_test.push(
+    await f_deno_test("t2",                             //< here
+    async () => {                                       //
+        return new Promise((f_res)=>{                   //
+            window.setTimeout(function(){               //    
+                t2 = 2                                  //
+                console.log(`t2:${t2}`)                 //           
+                f_res(t2)                               //
+            }, 1000)                                    //
+        })                                              //    
+    }                                                   //
+))                                                      //        
+a_o_test.push(f_deno_test("t3", async () => {           //
+    // since t3 is depending on t2, we need to          // < await f_deno_test t2
+    t3 = t2+t2
+    console.log(`t3:${t3}`)
+    f_assert_equals(t3, 4)
+}))
+f_deno_test_all_and_print_summary(a_o_test);
+
 //./readme.md:end

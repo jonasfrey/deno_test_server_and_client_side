@@ -150,7 +150,7 @@ let f_deno_test = async function(
     return new Promise(async (f_resolve) => {
 
         if(b_deno){
-            return Deno.test(s_name_test, f_fun)
+            return f_resolve(Deno.test(s_name_test, f_fun))
         }
         let o_test = new O_test(
             s_name_test, 
