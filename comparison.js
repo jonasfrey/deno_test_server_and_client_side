@@ -4,8 +4,8 @@ import {
     f_deno_test, 
     f_deno_test_summary,
     f_deno_test_all_and_print_summary, 
-// } from "../functions.module.js"
-// } from "./tmp.js"
+    f_o_test, 
+    
 } from './localhost/mod.js'
 import { assertEquals } from "https://deno.land/std@0.192.0/testing/asserts.ts";
 

@@ -235,10 +235,95 @@ let f_deno_test_all_and_print_summary = async function(
     })
 
 }
+let f_o_test = function(){
+    return {a_v_arg: arguments}
+}
+
+let f_display_test_selection_or_run_selected_test_and_print_summary = async function(
+    a_o_test
+){
+    let b_run_all = false;
+    let b_deno = "Deno" in window; 
+    let a_s_arg = [];
+
+    if(b_deno){
+        a_s_arg = Deno.args; 
+    }else{
+        let o_mod_ansiup = await import('https://cdn.jsdelivr.net/npm/ansi-up@1.0.0/dist/ansi-up.min.js')
+        // console.log(o_mod_ansiup)
+        var ansi_up = new o_mod_ansiup.AnsiUp();
+
+        let f_console_log__original = console.log; 
+        console.log = function(){
+            let o = document.createElement('div');
+            let s = Array.from(arguments).join(',')
+            
+            o.innerHTML = s.split('\n').map(s=>ansi_up.ansi_to_html(s)).join('<br>')  
+
+            document.body.appendChild(
+                o
+            )
+            f_console_log__original(...arguments)
+        }
+        let o_style = document.createElement('style');
+        o_style.innerHTML = `
+        * {
+            font-family:monospace, sans-serif;
+            background: #333;
+            color: #eee;
+        }
+        a{
+            color: lightblue;
+        }
+        `
+        document.head.appendChild(o_style)
+        
+        a_s_arg = window.location.hash.substring(1).split(':').filter(s=>s.trim()!='')
+        if(a_s_arg.length == 0){
+            let s = a_o_test.map(
+                o=>{
+                    console.log(o.a_v_arg)
+                    return `<a href='#${o.a_v_arg[0]}' onclick="window.location.href = window.location.href+'#${o.a_v_arg[0]}';window.location.reload()" >run test: '${o.a_v_arg[0]}'</a><br>`
+                }
+            ).join('\n')
+            document.body.innerHTML = `
+            <a href='#all' onclick="window.location.href = window.location.href+'#all';window.location.reload()" >run test: 'all'</a><br>
+                ${s}
+            `
+        }
+    }
+    window.addEventListener('hashchange', function() {
+        // Check if the hash is empty
+        if (!location.hash) {
+            // Reload the page
+            location.reload();
+        }
+    });
+
+
+    let a_o_test__to_run = a_o_test.filter(o=>a_s_arg.includes(o.a_v_arg[0]));
+    console.log('run with "all"/"url#all" to run all tests')
+    console.log('run with "s_name_test s_name_test2"/"url#s_name_test:s_name_test2" to run specific tests')
+    if(a_s_arg.length == 0){
+        console.log('running last test'); 
+        a_o_test__to_run = [a_o_test.at(-1)];
+    }
+    if(a_s_arg.includes('all')){
+        console.log('running all tests')
+        a_o_test__to_run = a_o_test
+    }
+    return f_deno_test_all_and_print_summary(
+        a_o_test__to_run.map(o=>{
+            return f_deno_test(...o.a_v_arg)
+        })
+    )
+}
 export {
     f_assert_equals, 
     f_deno_test, 
     f_deno_test_summary,
-    f_deno_test_all_and_print_summary
+    f_deno_test_all_and_print_summary, 
+    f_o_test, 
+    f_display_test_selection_or_run_selected_test_and_print_summary
 }
 
