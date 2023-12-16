@@ -269,6 +269,7 @@ let f_display_test_selection_or_run_selected_test_and_print_summary = async func
         o_style.innerHTML = `
         * {
             font-family:monospace, sans-serif;
+            white-space: pre;
             background: #333;
             color: #eee;
         }
