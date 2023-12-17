@@ -1,3 +1,5 @@
+
+
 let b_deno = "Deno" in window;
 let o_mod__asserts = null;
 
@@ -242,10 +244,13 @@ let f_o_test = function(){
 let f_display_test_selection_or_run_selected_test_and_print_summary = async function(
     a_o_test
 ){
+    let s_token_run_all_tests = 'all';
+    let s_class_console =`console_output`
+
     let b_run_all = false;
     let b_deno = "Deno" in window; 
     let a_s_arg = [];
-
+    let a_o_test__to_run = []
     if(b_deno){
         a_s_arg = Deno.args; 
     }else{
@@ -260,38 +265,16 @@ let f_display_test_selection_or_run_selected_test_and_print_summary = async func
             
             o.innerHTML = s.split('\n').map(s=>ansi_up.ansi_to_html(s)).join('<br>')  
 
-            document.body.appendChild(
+            document?.querySelector(`.${s_class_console}`)?.appendChild(
                 o
             )
+            o.scrollIntoView()
             f_console_log__original(...arguments)
         }
-        let o_style = document.createElement('style');
-        o_style.innerHTML = `
-        * {
-            font-family:monospace, sans-serif;
-            white-space: pre;
-            background: #333;
-            color: #eee;
-        }
-        a{
-            color: lightblue;
-        }
-        `
-        document.head.appendChild(o_style)
-        
+
         a_s_arg = window.location.hash.substring(1).split(':').filter(s=>s.trim()!='')
-        if(a_s_arg.length == 0){
-            let s = a_o_test.map(
-                o=>{
-                    console.log(o.a_v_arg)
-                    return `<a href='#${o.a_v_arg[0]}' onclick="window.location.href = window.location.href+'#${o.a_v_arg[0]}';window.location.reload()" >run test: '${o.a_v_arg[0]}'</a><br>`
-                }
-            ).join('\n')
-            document.body.innerHTML = `
-            <a href='#all' onclick="window.location.href = window.location.href+'#all';window.location.reload()" >run test: 'all'</a><br>
-                ${s}
-            `
-        }
+        
+
     }
     window.addEventListener('hashchange', function() {
         // Check if the hash is empty
@@ -301,17 +284,116 @@ let f_display_test_selection_or_run_selected_test_and_print_summary = async func
         }
     });
 
+    console.log('---')
+    console.log(`${(b_deno) ? `'-- ${s_token_run_all_tests}'`: `'url#${s_token_run_all_tests}'`} to run all tests`)
+    console.log(`${(b_deno) ? `'-- s_name_test s_name_test2'`: `'url#s_name_test:s_name_test2'`} to run specific tests`)
+    console.log('---')
 
-    let a_o_test__to_run = a_o_test.filter(o=>a_s_arg.includes(o.a_v_arg[0]));
-    console.log('run with "all"/"url#all" to run all tests')
-    console.log('run with "s_name_test s_name_test2"/"url#s_name_test:s_name_test2" to run specific tests')
+    a_o_test__to_run = a_o_test.filter(o=>a_s_arg.includes(o.a_v_arg[0]));
+    console.log(`arguments present: ${a_s_arg}`)
     if(a_s_arg.length == 0){
         console.log('running last test'); 
+        console.log('---'); 
         a_o_test__to_run = [a_o_test.at(-1)];
     }
-    if(a_s_arg.includes('all')){
+    if(a_s_arg.includes(s_token_run_all_tests)){
         console.log('running all tests')
+        console.log('---')
         a_o_test__to_run = a_o_test
+    }
+
+    document.documentElement.style.margin = '0'
+    document.documentElement.style.padding = '0'
+    if(!b_deno){
+        let o_mod__html_from_js = await import('https://deno.land/x/f_o_html_from_o_js@2.1/mod.js');
+        let o_html = await o_mod__html_from_js.f_o_html__and_make_renderable({
+            style: `
+            font-family:monospace, sans-serif;
+            white-space: pre;
+            background: #333;
+            color: #eee;
+            display:flex;
+            width:100vw;
+            height:100vh;
+            align-items: center;
+            justify-content: center;
+            `,
+            a_o: [
+                    {
+                        s_tag: "style", 
+                        innerHTML: `
+                        *{margin:0;padding:0;box-sizing:border-box}
+                        a{color:lightblue}
+                        `
+                    },
+                    {   
+                        style: `max-height:100vh;overflow-y:scroll;padding: 1rem`,
+
+                        a_o: [
+                            {
+                                s_tag: 'h2',
+                                // innerText: `current test(s):`, 
+                                innerText: "available test(s)"
+                            },
+                            // a_o_test__to_run.map(o=>{
+                            //     return {
+                            //         s_tag: "h3", 
+                            //         innerText: o.a_v_arg[0]
+                            //     }
+                            // }),
+                            
+                            ...[
+                                'all',
+                                ...a_o_test.map(o=>o.a_v_arg[0])
+                            ].map(
+                                s=>{
+                                    return {
+                                        a_o: [
+                                            {
+                                                s_tag: "a", 
+                                                href: `#${s}`,
+                                                onclick : function(){
+                                                    window.location.href = window.location.href.split('#').shift()+`#${s}`
+                                                    window.location.reload()
+                                                }, 
+                                                innerText: `run test: '${s}'`
+                                            }, 
+            
+                                            {
+                                                s_tag: "br"
+                                            }
+                                        ]
+                                    }
+                                }
+                            ), 
+                            {
+                                s_tag: "a", 
+                                href: `#`,
+                                onclick : function(){
+                                    location.href.replace(location.hash,"")
+                                    window.location.reload()
+                                }, 
+                                innerText: `list all available tests'`
+                            }, 
+                        ]
+                    }, 
+                    {
+
+                        style: `max-height:100vh;overflow-y:scroll;padding: 1rem`,
+                        a_o: [
+                            {
+                                s_tag: 'h2', 
+                                innerText: `console output`
+                            },
+                            {
+                                class: s_class_console
+                            }
+                        ]
+                    }
+                ]
+        })
+        document.body.appendChild(o_html);
+
     }
     return f_deno_test_all_and_print_summary(
         a_o_test__to_run.map(o=>{
