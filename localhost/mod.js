@@ -310,6 +310,11 @@ let f_display_test_selection_or_run_selected_test_and_print_summary = async func
             style: `
             font-family:monospace, sans-serif;
             white-space: pre;
+            white-space: -moz-pre-wrap; /* Firefox */
+            white-space: -pre-wrap; /* ancient Opera */
+            white-space: -o-pre-wrap; /* newer Opera */
+            white-space: pre-wrap; /* Chrome; W3C standard */
+            word-wrap: break-word; /* IE */
             background: #333;
             color: #eee;
             display:flex;
