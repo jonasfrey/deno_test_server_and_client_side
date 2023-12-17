@@ -1,4 +1,4 @@
-<!-- {"s_msg":"this file was automatically generated","s_by":"f_generate_markdown.module.js","s_ts_created":"Sat Dec 16 2023 22:50:24 GMT+0100 (Central European Standard Time)","n_ts_created":1702763424672} -->
+<!-- {"s_msg":"this file was automatically generated","s_by":"f_generate_markdown.module.js","s_ts_created":"Sun Dec 17 2023 02:43:03 GMT+0100 (Central European Standard Time)","n_ts_created":1702777383835} -->
 # import lib
 ```javascript
 import {
@@ -54,6 +54,14 @@ let a_o_test = [
         return fetch("https://123jasdlfj123u4kljsdf_nonexistingdomain.com")
             .then(o_resp=>{f_assert_equals(o_resp.status, 404)})
     }),
+    ...new Array(100).fill(0).map((v, n_idx)=>{
+        return f_o_test(
+            `auto_gen_test_${n_idx}`, 
+            ()=>{
+                f_assert_equals(1+1, 2);
+            }
+        )
+    })
 ]
 await f_display_test_selection_or_run_selected_test_and_print_summary(a_o_test);
 ```
