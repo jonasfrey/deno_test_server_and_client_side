@@ -61,7 +61,13 @@ let a_o_test = [
                 f_assert_equals(1+1, 2);
             }
         )
-    })
+    }), 
+    f_o_test(
+        "provocated_fail", 
+        async ()=>{
+            2+a;
+        }
+    ), 
 ]
 await f_display_test_selection_or_run_selected_test_and_print_summary(a_o_test);
 //./readme.md:end

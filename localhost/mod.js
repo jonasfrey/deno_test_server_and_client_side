@@ -170,8 +170,9 @@ let f_deno_test = async function(
             // }
 
         } catch (error) {
+            console.error(error)
+            // throw Error(error)
             o_test.o_error = error
-
         }
         o_test.n_ms_end = window.performance.now();
         o_test.s_output_summary = `${o_test.s_name} ... ${(!o_test.o_error) ? f_s_ansi_clrd('ok', o.n_color_green) : f_s_ansi_clrd('FAILED', o.n_color_red, o.n_font_bold)} ${f_s_ansi_clrd(`(${f_n_ms_delta__from_o_test(o_test).toFixed(0)}ms)`, o.n_color_white)}`
@@ -180,7 +181,9 @@ let f_deno_test = async function(
         if(o_test.o_error){
             o_test.s_output_error = `
 testname:'${o_test.s_name}'
-${o_test.o_error.toString()}
+${o_test.o_error.name}
+${o_test.o_error.message}
+${o_test.o_error.stack}
 ${o_test.o_error.s_ansi_colored_message}
                 `
             console.log(o_test.s_output_error)
