@@ -229,7 +229,10 @@ ${(a_o_test__failed.length > 0) ? f_s_ansi_clrd('FAILED', o.n_color_red, o.n_fon
 let f_deno_test_all_and_print_summary = async function(
     a_o_promise
 ){
-    
+    if(b_deno){
+        // there is no way to detect if 'deno run ... ' or 'deno test ... ' was called!?!?!
+        console.log('remember to call this script with: deno test script.js')
+    }
     return new Promise(async (f_res, f_rej)=>{
         if(b_deno){
             f_res()
