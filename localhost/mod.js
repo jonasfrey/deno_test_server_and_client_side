@@ -305,9 +305,9 @@ let f_display_test_selection_or_run_selected_test_and_print_summary = async func
         a_o_test__to_run = a_o_test
     }
 
-    document.documentElement.style.margin = '0'
-    document.documentElement.style.padding = '0'
     if(!b_deno){
+        document.documentElement.style.margin = '0'
+        document.documentElement.style.padding = '0'
         let o_mod__html_from_js = await import('https://deno.land/x/f_o_html_from_o_js@2.1/mod.js');
         let o_html = await o_mod__html_from_js.f_o_html__and_make_renderable({
             style: `
