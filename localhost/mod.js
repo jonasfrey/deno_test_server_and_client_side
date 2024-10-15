@@ -1,6 +1,8 @@
+import { 
+    f_b_deno
+} from "https://deno.land/x/handyhelpers@5.0.0/mod.js"
 
-
-let b_deno = "Deno" in window;
+let b_deno = f_b_deno();
 let o_mod__asserts = null;
 
 class AssertionError extends Error {
@@ -160,7 +162,7 @@ let f_deno_test = async function(
         );
         
         try {
-            o_test.n_ms_start = window.performance.now();
+            o_test.n_ms_start = globalThis.performance.now();
             let v_promise_return = await o_test.f_fun()
             // if(
             //     o_test.f_fun.constructor.name == "AsyncFunction" 
@@ -174,7 +176,7 @@ let f_deno_test = async function(
             // throw Error(error)
             o_test.o_error = error
         }
-        o_test.n_ms_end = window.performance.now();
+        o_test.n_ms_end = globalThis.performance.now();
         o_test.s_output_summary = `${o_test.s_name} ... ${(!o_test.o_error) ? f_s_ansi_clrd('ok', o.n_color_green) : f_s_ansi_clrd('FAILED', o.n_color_red, o.n_font_bold)} ${f_s_ansi_clrd(`(${f_n_ms_delta__from_o_test(o_test).toFixed(0)}ms)`, o.n_color_white)}`
         console.info(o_test.s_output_summary)
         
@@ -254,7 +256,7 @@ let f_display_test_selection_or_run_selected_test_and_print_summary = async func
     let s_class_console =`console_output`
 
     let b_run_all = false;
-    let b_deno = "Deno" in window; 
+    let b_deno = f_b_deno();
     let a_s_arg = [];
     let a_o_test__to_run = []
     if(b_deno){
@@ -278,11 +280,11 @@ let f_display_test_selection_or_run_selected_test_and_print_summary = async func
             f_console_log__original(...arguments)
         }
 
-        a_s_arg = window.location.hash.substring(1).split(':').filter(s=>s.trim()!='')
+        a_s_arg = globalThis.location.hash.substring(1).split(':').filter(s=>s.trim()!='')
         
 
     }
-    window.addEventListener('hashchange', function() {
+    globalThis.addEventListener('hashchange', function() {
         // Check if the hash is empty
         if (!location.hash) {
             // Reload the page
@@ -364,8 +366,8 @@ let f_display_test_selection_or_run_selected_test_and_print_summary = async func
                                                 s_tag: "a", 
                                                 href: `#${s}`,
                                                 onclick : function(){
-                                                    window.location.href = window.location.href.split('#').shift()+`#${s}`
-                                                    window.location.reload()
+                                                    globalThis.location.href = globalThis.location.href.split('#').shift()+`#${s}`
+                                                    globalThis.location.reload()
                                                 }, 
                                                 innerText: `run test: '${s}'`
                                             }, 
@@ -382,7 +384,7 @@ let f_display_test_selection_or_run_selected_test_and_print_summary = async func
                                 href: `#`,
                                 onclick : function(){
                                     location.href.replace(location.hash,"")
-                                    window.location.reload()
+                                    globalThis.location.reload()
                                 }, 
                                 innerText: `list all available tests'`
                             }, 

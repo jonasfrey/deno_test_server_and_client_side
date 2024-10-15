@@ -17,14 +17,14 @@ import { assertEquals } from "https://deno.land/std@0.191.0/testing/asserts.ts";
 // assertEquals(1,2)
 // Deno.test('no_promise_return', async function(){
 //     new Promise((f_res)=>{
-//         window.setTimeout(function(){
+//         globalThis.setTimeout(function(){
 //             console.log("done")
 //         },2000)
 //     })
 // })
 // Deno.test('promise_return', async function(){
 //     return new Promise((f_res)=>{
-//         window.setTimeout(function(){
+//         globalThis.setTimeout(function(){
 //             console.log("done")
 //         },2000)
 //     })
