@@ -1,8 +1,8 @@
 import { 
-    f_b_deno
+    f_b_denojs
 } from "https://deno.land/x/handyhelpers@5.0.0/mod.js"
 
-let b_deno = f_b_deno();
+let b_deno = f_b_denojs();
 let o_mod__asserts = null;
 
 class AssertionError extends Error {
@@ -256,7 +256,7 @@ let f_display_test_selection_or_run_selected_test_and_print_summary = async func
     let s_class_console =`console_output`
 
     let b_run_all = false;
-    let b_deno = f_b_deno();
+    let b_deno = f_b_denojs();
     let a_s_arg = [];
     let a_o_test__to_run = []
     if(b_deno){
@@ -313,7 +313,7 @@ let f_display_test_selection_or_run_selected_test_and_print_summary = async func
     if(!b_deno){
         document.documentElement.style.margin = '0'
         document.documentElement.style.padding = '0'
-        let o_mod__html_from_js = await import('https://deno.land/x/f_o_html_from_o_js@2.1/mod.js');
+        let o_mod__html_from_js = await import('https://deno.land/x/f_o_html_from_o_js@5.0.1/mod.js');
         let o_html = await o_mod__html_from_js.f_o_html__and_make_renderable({
             style: `
             font-family:monospace, sans-serif;
